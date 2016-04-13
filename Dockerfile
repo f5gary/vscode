@@ -27,6 +27,11 @@ RUN unzip /usr/local/vscode.zip -d /usr/local/
 ENV HOME /home/user
 RUN useradd --create-home --home-dir $HOME user && chown -R user:user $HOME
 COPY usr/local/bin/vscode /usr/local/bin/vscode
+ENV GOPATH=$HOME/go
+ENV PATH=$PATH:$GOPATH/bin
+RUN go get -u github.com/golang/lint/golint
+RUN go get -u github.com/rogpeppe/godef
+
 WORKDIR $HOME
 ENTRYPOINT [ "/usr/local/bin/vscode" ]
 
