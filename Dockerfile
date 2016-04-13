@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   curl \
   git \
+  golang \
   libc6-dev \
   nodejs \
   npm \
