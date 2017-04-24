@@ -23,7 +23,8 @@ RUN apt-get update && apt-get install -y \
   libnss3 \
   libpci3 \
   libxtst6 \
-  libcanberra-gtk-module
+  libcanberra-gtk-module \
+  libnotify4
 RUN rm -rf /var/lib/apt/lists/* && npm update -g
 RUN wget https://go.microsoft.com/fwlink/?LinkID=620884 --output-document=/usr/local/vscode.zip
 RUN unzip /usr/local/vscode.zip -d /usr/local/
