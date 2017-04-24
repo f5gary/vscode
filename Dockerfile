@@ -22,12 +22,14 @@ RUN apt-get update && apt-get install -y \
   libgtk2.0-0 \
   libnss3 \
   libpci3 \
+  libxss1 \
   libxtst6 \
   libcanberra-gtk-module \
   libnotify4
 RUN rm -rf /var/lib/apt/lists/* && npm update -g
-RUN wget https://go.microsoft.com/fwlink/?LinkID=620884 --output-document=/usr/local/vscode.zip
-RUN unzip /usr/local/vscode.zip -d /usr/local/
+RUN wget https://go.microsoft.com/fwlink/?LinkID=620884 --output-document=/usr/local/vscode.tgz
+WORKDIR /usr/local
+RUN tar -xzvf vscode.tgz
 ENV HOME /home/user
 RUN useradd -g adm --create-home --home-dir $HOME user && chown -R user:adm $HOME
 COPY usr/local/bin/vscode /usr/local/bin/vscode
