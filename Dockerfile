@@ -2,10 +2,17 @@
 FROM ubuntu:trusty
 MAINTAINER Gary Ritzer <gwritz@gmail.com>
 
+WORKDIR /usr/local
+ENV HOME /home/user
+ENV GOPATH=$HOME/go
+ENV PATH=$PATH:$GOPATH/bin
+
+COPY usr/local/bin/vscode /usr/local/bin/vscode
+
 # Install visual studio code
-RUN apt-get update && apt-get install -y software-properties-common
-RUN add-apt-repository ppa:ubuntu-lxc/lxd-stable
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y software-properties-common && \
+  add-apt-repository ppa:ubuntu-lxc/lxd-stable && \
+  apt-get update && apt-get install -y \
   build-essential \
   ca-certificates \
   curl \
@@ -25,18 +32,14 @@ RUN apt-get update && apt-get install -y \
   libxss1 \
   libxtst6 \
   libcanberra-gtk-module \
-  libnotify4
-RUN rm -rf /var/lib/apt/lists/* && npm update -g
-RUN wget https://go.microsoft.com/fwlink/?LinkID=620884 --output-document=/usr/local/vscode.tgz
-WORKDIR /usr/local
-RUN tar -xzvf vscode.tgz
-ENV HOME /home/user
-RUN useradd -g adm --create-home --home-dir $HOME user && chown -R user:adm $HOME
-COPY usr/local/bin/vscode /usr/local/bin/vscode
-ENV GOPATH=$HOME/go
-ENV PATH=$PATH:$GOPATH/bin
-RUN go get -u github.com/golang/lint/golint
-RUN go get -u github.com/rogpeppe/godef
+  libnotify4 && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/* && npm update -g && \
+  wget https://go.microsoft.com/fwlink/?LinkID=620884 --output-document=/usr/local/vscode.tgz && \
+  tar -xzvf vscode.tgz && \
+  useradd -g adm --create-home --home-dir $HOME user && chown -R user:adm $HOME && \
+  go get -u github.com/golang/lint/golint && \
+  go get -u github.com/rogpeppe/godef
 
 WORKDIR $HOME
 ENTRYPOINT [ "/usr/local/bin/vscode" ]
