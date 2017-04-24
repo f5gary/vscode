@@ -1,6 +1,6 @@
 # Dockerfile for ubuntu trusty (14.04) running ms visual studio code
 FROM ubuntu:trusty
-MAINTAINER Gary Ritzer <garyr@f5.com>
+MAINTAINER Gary Ritzer <gwritz@gmail.com>
 
 # Install visual studio code
 RUN apt-get update && apt-get install -y software-properties-common

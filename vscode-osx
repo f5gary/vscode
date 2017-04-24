@@ -19,7 +19,7 @@ fi
 CONTAINER_ID=$(docker run -d --net=host --name vscode \
                           -e DISPLAY="${ADDR}:0" \
                           -v $HOME:/home/user \
-                          f5gary/vscode)
+                          gwritz/vscode)
 echo "${CONTAINER_ID}"
 docker wait "${CONTAINER_ID}"
 docker rm "${CONTAINER_ID}" >/dev/null
